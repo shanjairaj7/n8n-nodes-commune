@@ -1,0 +1,6 @@
+gulpfile.js
+.eslintrc.js
+.prettierrc
+*.ts
+!dist/**
+tsconfig.json

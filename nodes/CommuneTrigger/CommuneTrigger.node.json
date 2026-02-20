@@ -1,0 +1,22 @@
+{
+  "node": "n8n-nodes-commune.communeTrigger",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": ["Communication"],
+  "subcategories": {
+    "Communication": ["Email"]
+  },
+  "resources": {
+    "credentialDocumentation": [
+      {
+        "url": "https://commune.email/docs/authentication"
+      }
+    ],
+    "primaryDocumentation": [
+      {
+        "url": "https://commune.email/docs/webhooks"
+      }
+    ]
+  },
+  "alias": ["email trigger", "commune trigger", "inbound email", "email webhook", "ai email"]
+}

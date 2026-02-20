@@ -1,0 +1,22 @@
+{
+  "node": "n8n-nodes-commune.commune",
+  "nodeVersion": "1.0",
+  "codexVersion": "1.0",
+  "categories": ["Communication"],
+  "subcategories": {
+    "Communication": ["Email"]
+  },
+  "resources": {
+    "credentialDocumentation": [
+      {
+        "url": "https://commune.email/docs/authentication"
+      }
+    ],
+    "primaryDocumentation": [
+      {
+        "url": "https://commune.email/docs"
+      }
+    ]
+  },
+  "alias": ["email", "agent email", "commune", "inbox", "ai email"]
+}

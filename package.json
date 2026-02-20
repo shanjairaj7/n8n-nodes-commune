@@ -1,0 +1,51 @@
+{
+  "name": "n8n-nodes-commune",
+  "version": "0.1.2",
+  "description": "n8n community node for Commune — email infrastructure for AI agents",
+  "keywords": [
+    "n8n-community-node-package",
+    "email",
+    "ai-agents",
+    "commune",
+    "inbox",
+    "automation"
+  ],
+  "license": "MIT",
+  "homepage": "https://commune.email",
+  "author": {
+    "name": "Shanjai Raj",
+    "email": "shanjai@useairstrip.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shanjairaj7/n8n-nodes-commune"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier nodes credentials --write",
+    "lint": "eslint nodes credentials package.json"
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/CommuneApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Commune/Commune.node.js",
+      "dist/nodes/CommuneTrigger/CommuneTrigger.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "eslint": "^8.0.0",
+    "gulp": "^4.0.0",
+    "n8n-workflow": "*",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  }
+}
