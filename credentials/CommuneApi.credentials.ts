@@ -1,9 +1,14 @@
-import { ICredentialType, INodeProperties } from 'n8n-workflow';
+import {
+	IAuthenticateGeneric,
+	ICredentialTestRequest,
+	ICredentialType,
+	INodeProperties,
+} from 'n8n-workflow';
 
 export class CommuneApi implements ICredentialType {
 	name = 'communeApi';
 	displayName = 'Commune API';
-	documentationUrl = 'https://commune.email/docs/authentication';
+	documentationUrl = 'https://docs.commune.email/authentication';
 
 	properties: INodeProperties[] = [
 		{
@@ -19,8 +24,8 @@ export class CommuneApi implements ICredentialType {
 		},
 	];
 
-	authenticate = {
-		type: 'generic' as const,
+	authenticate: IAuthenticateGeneric = {
+		type: 'generic',
 		properties: {
 			headers: {
 				Authorization: '=Bearer {{$credentials.apiKey}}',
@@ -28,7 +33,7 @@ export class CommuneApi implements ICredentialType {
 		},
 	};
 
-	test = {
+	test: ICredentialTestRequest = {
 		request: {
 			baseURL: 'https://api.commune.email',
 			url: '/v1/inboxes',

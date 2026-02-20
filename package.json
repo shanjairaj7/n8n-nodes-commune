@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-commune",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "n8n community node for Commune — email infrastructure for AI agents",
   "keywords": [
     "n8n-community-node-package",
