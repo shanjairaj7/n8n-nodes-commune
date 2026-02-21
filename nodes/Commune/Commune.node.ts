@@ -88,7 +88,7 @@ export class Commune implements INodeType {
 				default: '',
 				displayOptions: { show: { resource: ['message'], operation: ['send'] } },
 				description: 'Recipient email address. Separate multiple addresses with commas.',
-				placeholder: 'customer@example.com',
+				placeholder: 'e.g. customer@example.com',
 			},
 			{
 				displayName: 'Subject',
@@ -98,6 +98,7 @@ export class Commune implements INodeType {
 				default: '',
 				displayOptions: { show: { resource: ['message'], operation: ['send'] } },
 				description: 'Email subject line',
+				placeholder: 'e.g. Your order has shipped',
 			},
 			{
 				displayName: 'Email Body (HTML)',
@@ -107,7 +108,7 @@ export class Commune implements INodeType {
 				default: '',
 				displayOptions: { show: { resource: ['message'], operation: ['send'] } },
 				description: 'HTML email body. Provide either this or Plain Text Body (or both).',
-				placeholder: '<p>Hello!</p>',
+				placeholder: 'e.g. <p>Hello!</p>',
 			},
 			{
 				displayName: 'Plain Text Body',
@@ -131,7 +132,7 @@ export class Commune implements INodeType {
 						name: 'thread_id',
 						type: 'string',
 						default: '',
-						description: 'Reply within an existing conversation thread.',
+						description: 'Reply within an existing conversation thread',
 					},
 					{
 						displayName: 'CC',
@@ -139,6 +140,7 @@ export class Commune implements INodeType {
 						type: 'string',
 						default: '',
 						description: 'CC addresses (comma-separated)',
+						placeholder: 'e.g. cc@example.com',
 					},
 					{
 						displayName: 'BCC',
@@ -146,6 +148,7 @@ export class Commune implements INodeType {
 						type: 'string',
 						default: '',
 						description: 'BCC addresses (comma-separated)',
+						placeholder: 'e.g. bcc@example.com',
 					},
 					{
 						displayName: 'Reply-To',
@@ -153,13 +156,15 @@ export class Commune implements INodeType {
 						type: 'string',
 						default: '',
 						description: 'Override the reply-to address',
+						placeholder: 'e.g. noreply@example.com',
 					},
 					{
 						displayName: 'From Name',
 						name: 'from',
 						type: 'string',
 						default: '',
-						description: 'Custom sender name or address',
+						description: 'Custom sender display name',
+						placeholder: 'e.g. Acme Support',
 					},
 				],
 			},
@@ -184,15 +189,15 @@ export class Commune implements INodeType {
 				noDataExpression: true,
 				displayOptions: { show: { resource: ['inbox'] } },
 				options: [
-					{ name: 'Create',               value: 'create',    action: 'Create an inbox'                        },
-					{ name: 'List',                 value: 'list',      action: 'List all inboxes'                       },
-					{ name: 'Get',                  value: 'get',       action: 'Get inbox details'                      },
-					{ name: 'Update',               value: 'update',    action: 'Update an inbox'                        },
-					{ name: 'Delete',               value: 'delete',    action: 'Delete an inbox'                        },
-					{ name: 'Set Webhook',          value: 'setWebhook', action: 'Set the webhook on an inbox'            },
-					{ name: 'Set Extraction Schema', value: 'setSchema', action: 'Configure structured data extraction'   },
+					{ name: 'Create',                value: 'create',     action: 'Create an inbox'                       },
+					{ name: 'List',                  value: 'list',       action: 'List all inboxes'                      },
+					{ name: 'Get',                   value: 'get',        action: 'Get inbox details'                     },
+					{ name: 'Update',                value: 'update',     action: 'Update an inbox'                       },
+					{ name: 'Delete',                value: 'delete',     action: 'Delete an inbox'                       },
+					{ name: 'Set Webhook',           value: 'setWebhook', action: 'Set the webhook on an inbox'           },
+					{ name: 'Set Extraction Schema', value: 'setSchema',  action: 'Configure structured data extraction'  },
 				],
-				default: 'create',
+				default: 'list',
 			},
 
 			// Create inbox
@@ -204,7 +209,7 @@ export class Commune implements INodeType {
 				default: '',
 				displayOptions: { show: { resource: ['inbox'], operation: ['create'] } },
 				description: 'The part before @ in the email address (e.g. "support" → support@yourdomain.com)',
-				placeholder: 'support',
+				placeholder: 'e.g. support',
 			},
 			{
 				displayName: 'Inbox Options',
@@ -227,6 +232,7 @@ export class Commune implements INodeType {
 						type: 'string',
 						default: '',
 						description: 'Sender name shown in email clients (e.g. "Acme Support")',
+						placeholder: 'e.g. Acme Support',
 					},
 					{
 						displayName: 'Agent Name',
@@ -234,6 +240,7 @@ export class Commune implements INodeType {
 						type: 'string',
 						default: '',
 						description: 'Internal name for this agent inbox',
+						placeholder: 'e.g. support-bot',
 					},
 					{
 						displayName: 'Webhook URL',
@@ -241,11 +248,12 @@ export class Commune implements INodeType {
 						type: 'string',
 						default: '',
 						description: 'URL to notify when emails arrive. Use the Commune Trigger node for n8n-native webhook handling.',
+						placeholder: 'e.g. https://your-server.com/webhook',
 					},
 				],
 			},
 
-			// Get / Update / Delete / setWebhook / setSchema: require domainId + inboxId
+			// Shared domainId + inboxId for get / update / delete / setWebhook / setSchema
 			{
 				displayName: 'Domain ID',
 				name: 'domainId',
@@ -259,6 +267,7 @@ export class Commune implements INodeType {
 					},
 				},
 				description: 'The ID of the domain the inbox belongs to',
+				placeholder: 'e.g. d_abc123',
 			},
 			{
 				displayName: 'Inbox ID',
@@ -273,6 +282,35 @@ export class Commune implements INodeType {
 					},
 				},
 				description: 'The ID of the inbox to act on',
+				placeholder: 'e.g. inbox_xyz',
+			},
+
+			// Update inbox options
+			{
+				displayName: 'Update Fields',
+				name: 'inboxUpdateOptions',
+				type: 'collection',
+				placeholder: 'Add Field',
+				default: {},
+				displayOptions: { show: { resource: ['inbox'], operation: ['update'] } },
+				options: [
+					{
+						displayName: 'Display Name',
+						name: 'displayName',
+						type: 'string',
+						default: '',
+						description: 'Sender name shown in email clients',
+						placeholder: 'e.g. Acme Support',
+					},
+					{
+						displayName: 'Agent Name',
+						name: 'agentName',
+						type: 'string',
+						default: '',
+						description: 'Internal name for this agent inbox',
+						placeholder: 'e.g. support-bot',
+					},
+				],
 			},
 
 			// Set Webhook
@@ -284,7 +322,7 @@ export class Commune implements INodeType {
 				default: '',
 				displayOptions: { show: { resource: ['inbox'], operation: ['setWebhook'] } },
 				description: 'The URL that Commune will POST inbound email events to',
-				placeholder: 'https://your-server.com/webhook/email',
+				placeholder: 'e.g. https://your-server.com/webhook/email',
 			},
 
 			// Set Extraction Schema
@@ -329,7 +367,7 @@ export class Commune implements INodeType {
 				required: true,
 				default: '',
 				displayOptions: { show: { resource: ['thread'], operation: ['list'] } },
-				description: 'Filter threads by inbox',
+				description: 'Filter threads by inbox ID',
 			},
 			{
 				displayName: 'Thread ID',
@@ -345,10 +383,10 @@ export class Commune implements INodeType {
 				name: 'status',
 				type: 'options',
 				options: [
-					{ name: 'Open',         value: 'open'         },
-					{ name: 'Needs Reply',  value: 'needs_reply'  },
-					{ name: 'Waiting',      value: 'waiting'      },
-					{ name: 'Closed',       value: 'closed'       },
+					{ name: 'Open',        value: 'open'        },
+					{ name: 'Needs Reply', value: 'needs_reply' },
+					{ name: 'Waiting',     value: 'waiting'     },
+					{ name: 'Closed',      value: 'closed'      },
 				],
 				default: 'open',
 				displayOptions: { show: { resource: ['thread'], operation: ['updateStatus'] } },
@@ -390,7 +428,7 @@ export class Commune implements INodeType {
 				default: '',
 				displayOptions: { show: { resource: ['search'] } },
 				description: 'What to search for. Commune uses semantic (vector) search when available.',
-				placeholder: 'angry customer about refund',
+				placeholder: 'e.g. angry customer about refund',
 			},
 			{
 				displayName: 'Inbox ID',
@@ -502,7 +540,7 @@ export class Commune implements INodeType {
 					if (!html && !text) {
 						throw new NodeOperationError(
 							this.getNode(),
-							'Provide at least an HTML body or Plain Text body',
+							'Provide at least an HTML body or plain text body',
 							{ itemIndex: i },
 						);
 					}
@@ -561,14 +599,38 @@ export class Commune implements INodeType {
 						headers: authHeader,
 					});
 
+				} else if (resource === 'inbox' && operation === 'update') {
+					const domainId = this.getNodeParameter('domainId', i) as string;
+					const inboxId  = this.getNodeParameter('inboxId',  i) as string;
+					const opts     = this.getNodeParameter('inboxUpdateOptions', i, {}) as any;
+					const body: any = {};
+					if (opts.displayName) body.display_name = opts.displayName;
+					if (opts.agentName)   body.name         = opts.agentName;
+
+					if (Object.keys(body).length === 0) {
+						throw new NodeOperationError(
+							this.getNode(),
+							'Provide at least one field to update in \'Update Fields\'',
+							{ itemIndex: i },
+						);
+					}
+
+					response = await this.helpers.httpRequest({
+						method: 'PUT',
+						url: `${BASE_URL}/domains/${domainId}/inboxes/${inboxId}`,
+						headers: jsonHeader,
+						body,
+					});
+
 				} else if (resource === 'inbox' && operation === 'delete') {
 					const domainId = this.getNodeParameter('domainId', i) as string;
 					const inboxId  = this.getNodeParameter('inboxId',  i) as string;
-					response = await this.helpers.httpRequest({
+					await this.helpers.httpRequest({
 						method: 'DELETE',
 						url: `${BASE_URL}/domains/${domainId}/inboxes/${inboxId}`,
 						headers: authHeader,
 					});
+					response = { deleted: true };
 
 				} else if (resource === 'inbox' && operation === 'setWebhook') {
 					const domainId = this.getNodeParameter('domainId',        i) as string;
@@ -649,9 +711,9 @@ export class Commune implements INodeType {
 				const data = (response as any)?.data ?? response;
 
 				if (Array.isArray(data)) {
-					returnData.push(...data.map((d: any) => ({ json: d })));
+					returnData.push(...data.map((d: any) => ({ json: d, pairedItem: { item: i } })));
 				} else {
-					returnData.push({ json: data });
+					returnData.push({ json: data as any, pairedItem: { item: i } });
 				}
 
 			} catch (error: any) {
